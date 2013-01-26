@@ -28,15 +28,18 @@ class ControllerListComponent extends Component {
         return $methods;
     }
 
-    private function removeParentMethods(Array $methods) {
+    private function removeParentMethods($methods = array()) {
         $appControllerMethods = get_class_methods('AppController');
-
-        return array_diff($methods, $appControllerMethods);
+        if(is_array($methods)){
+            return array_diff($methods, $appControllerMethods);
+        }
     }
 
-    private function removePrivateActions(Array $methods) {
-        return array_filter($methods, function ($method) {
+    private function removePrivateActions($methods = array()) {
+        if(!empty($methods)){
+            return array_filter($methods, function ($method) {
             return $method{0} != '_';
         });
+        }
     }
 }
